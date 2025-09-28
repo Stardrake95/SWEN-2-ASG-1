@@ -121,7 +121,7 @@ def get_positions_by_employer_command(employer_id):
             print(f'    Position {item.id} is for {item.title}')
             print("\n__________________________________________________________________________\n")
     else:
-        print(f'Employer {employer_id} has no positions')
+            print(f'Employer {employer_id} has no positions')
             
 app.cli.add_command(user_cli) # add the group to the cli
 
