@@ -9,3 +9,9 @@ def open_position(title, employer_id):
         db.session.commit()
         return new_position
     return False
+
+def get_all_positions_json():
+    position = Position.query.all()
+    if not position:
+        return []
+    return [game.toJSON() for game in games]
