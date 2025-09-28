@@ -4,8 +4,6 @@ from App.models.shortlist import Shortlist
 
 class Staff(User):
     __tablename__ = 'Staff'
-    email = db.Column(db.String(256))
-    department = db.Column(db.String(256))
 
     def __init__(self, username, password):
         self.username = username

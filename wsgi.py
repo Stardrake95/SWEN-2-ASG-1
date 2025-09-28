@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, open_position, add_student_to_shortlist, decide_shortlist, get_shortlist_by_student)
+from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, open_position, add_student_to_shortlist, decide_shortlist, get_shortlist_by_student, get_shortlist_by_position, get_positions_by_employer)
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -50,8 +50,9 @@ def list_user_command(format):
 @user_cli.command("add_position", help="Adds a position")
 @click.argument("title", default="Software Engineer")
 @click.argument("employer_id", default=1)
-def add_position_command(title, employer_id):
-    position = open_position(title, employer_id)
+@click.argument("number", default=1)
+def add_position_command(title, employer_id, number):
+    position = open_position(title, employer_id, number)
     if position:
         print(f'{title} created!')
     else:
@@ -92,8 +93,36 @@ def get_shortlist_command(student_id):
             print(f'Student {item.student_id} is {item.status.value} for position {item.position_id}')
     else:
         print(f'Student {student_id} has no shortlists')
-    
 
+@user_cli.command("get_shortlist_by_position", help="Gets a shortlist for a position")
+@click.argument("position_id", default=1)
+def get_shortlist_by_position_command(position_id):
+    list = get_shortlist_by_position(position_id)
+    if list:
+        for item in list:
+            print(f'Student {item.student_id} is {item.status.value} for {item.position.title} id: {item.position_id}')
+            print(f'    Staff {item.staff_id} added this student to the shortlist')
+            print(f'    Position {item.position_id} is {item.position.status.value}')
+            print(f'    Position {item.position_id} has {item.position.number_of_positions} slots')
+            print(f'    Position {item.position_id} is for {item.position.title}')
+            print("\n__________________________________________________________________________\n")
+
+    else:
+        print(f'Position {position_id} has no shortlists')
+
+@user_cli.command("get_positions_by_employer", help="Gets all positions for an employer")
+@click.argument("employer_id", default=1)
+def get_positions_by_employer_command(employer_id):
+    list = get_positions_by_employer(employer_id)
+    if list:
+        for item in list:
+            print(f'Position {item.id} is {item.status.value}')
+            print(f'    Position {item.id} has {item.number_of_positions} slots')
+            print(f'    Position {item.id} is for {item.title}')
+            print("\n__________________________________________________________________________\n")
+    else:
+        print(f'Employer {employer_id} has no positions')
+            
 app.cli.add_command(user_cli) # add the group to the cli
 
 '''

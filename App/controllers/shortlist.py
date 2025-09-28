@@ -26,6 +26,6 @@ def decide_shortlist(student_id, position_id, decision):
 
 def get_shortlist_by_student(student_id):
     return db.session.query(Shortlist).filter_by(student_id=student_id).all()
-    
-  
-    
+
+def get_shortlist_by_position(position_id):
+    return db.session.query(Shortlist).filter_by(position_id=position_id).all()

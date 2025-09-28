@@ -24,7 +24,6 @@ class Shortlist(db.Model):
         self.status = "pending"
         self.staff_id = staff_id
         
-
     def update_status(self, status):
         self.status = status
         db.session.commit()
@@ -36,5 +35,12 @@ class Shortlist(db.Model):
     def position_shortlist(self, position_id):
         return db.session.query(Shortlist).filter_by(position_id=position_id).all()
         
-        
+    def toJSON(self):
+        return{
+            "id": self.id,
+            "student_id": self.student_id,
+            "position_id": self.position_id,
+            "staff_id": self.staff_id,
+            "status": self.status
+        }
       
