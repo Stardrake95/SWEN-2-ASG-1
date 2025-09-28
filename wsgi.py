@@ -66,12 +66,13 @@ def add_to_shortlist_command(student_id, position_id, staff_id):
     test = add_student_to_shortlist(student_id, position_id, staff_id)
     if test:
         print(f'Student {student_id} added to shortlist for position {position_id}')
+        print("\n\n__________________________________________________________________________\n\n")
     else:
         print('One of the following is the issue:')
         print(f'    Position {position_id} is not open')
-        print(f'    Wrong staff id {staff_id}')
         print(f'    Student {student_id} already in shortlist for position {position_id}')
         print(f'    There is no more open slots for position {position_id}')
+        print("\n\n__________________________________________________________________________\n\n")
 
 @user_cli.command("decide_shortlist", help="Decides on a shortlist")
 @click.argument("student_id", default=1)
@@ -81,8 +82,10 @@ def decide_shortlist_command(student_id, position_id, decision):
     test = decide_shortlist(student_id, position_id, decision)
     if test:
         print(f'Student {student_id} is {decision} for position {position_id}')
+        print("\n\n__________________________________________________________________________\n\n")
     else:
         print(f'Student {student_id} not in shortlist for position {position_id}')
+        print("\n\n__________________________________________________________________________\n\n")
 
 @user_cli.command("get_shortlist", help="Gets a shortlist for a student")
 @click.argument("student_id", default=1)
@@ -91,8 +94,11 @@ def get_shortlist_command(student_id):
     if list:
         for item in list:
             print(f'Student {item.student_id} is {item.status.value} for position {item.position_id}')
+
+        print("\n\n__________________________________________________________________________\n\n")
     else:
         print(f'Student {student_id} has no shortlists')
+        print("\n\n__________________________________________________________________________\n\n")
 
 @user_cli.command("get_shortlist_by_position", help="Gets a shortlist for a position")
 @click.argument("position_id", default=1)
@@ -105,10 +111,11 @@ def get_shortlist_by_position_command(position_id):
             print(f'    Position {item.position_id} is {item.position.status.value}')
             print(f'    Position {item.position_id} has {item.position.number_of_positions} slots')
             print(f'    Position {item.position_id} is for {item.position.title}')
-            print("\n__________________________________________________________________________\n")
+            print("\n\n__________________________________________________________________________\n\n")
 
     else:
         print(f'Position {position_id} has no shortlists')
+        print("\n\n__________________________________________________________________________\n\n")
 
 @user_cli.command("get_positions_by_employer", help="Gets all positions for an employer")
 @click.argument("employer_id", default=1)
@@ -119,9 +126,10 @@ def get_positions_by_employer_command(employer_id):
             print(f'Position {item.id} is {item.status.value}')
             print(f'    Position {item.id} has {item.number_of_positions} slots')
             print(f'    Position {item.id} is for {item.title}')
-            print("\n__________________________________________________________________________\n")
+            print("\n\n__________________________________________________________________________\n\n")
     else:
             print(f'Employer {employer_id} has no positions')
+            print("\n\n__________________________________________________________________________\n\n")
             
 app.cli.add_command(user_cli) # add the group to the cli
 
