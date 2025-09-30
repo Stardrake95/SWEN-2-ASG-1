@@ -200,4 +200,30 @@ If you are adding models you may need to migrate the database with the commands 
     Creates an internship position for staff to shortlist on
 
 ## flask user add_to_shortlist "student_id" "position_id" "staff_id"
+    student_id: Id of Student
+    position_id: Id of Position
+    staff_id: Id of Staff
+
+    Staff member add a student to a position's shortlist
+
+## flask user decide_shortlist "student_id" "position_id"
+    student_id: Id of Student
+    position_id: Id of Position
+
+    Employer either accepts or rejects a student from the shortlist
+
+## flask user get_shortlist "student_id"
+    student_id: Id of Student
+
+    Retrives the positions the selected student is shortlisted on
+
+## flask user get_shortlist_by_position "position_id"
+    position_id: Id of Position
+
+    Retrives the shortlist for a specific position
+
+## flask user get_position_by_employer "employer_id"
+    employer_id: Id of employer
+
+    Retrives the postiotns created from a given employer
         
